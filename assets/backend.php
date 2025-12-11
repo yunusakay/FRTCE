@@ -1,17 +1,19 @@
 <?php include 'includes/header.php'; ?>
 
-<h1>Backend: WebSocket Server Code</h1>
+<h1 class="text-primary border-bottom pb-2">Backend: WebSocket Sunucu Kodu</h1>
 <p>
-    The server uses Node.js and the ws library.
+    Sunucu tarafında <strong>Node.js</strong> ve <strong>ws</strong> kütüphanesi kullanılmaktadır.
 </p>
 
-<h3>server.js</h3>
-<div class="code-display">
+<h3 class="mt-4">server.js</h3>
+<div class="code-block">
 const WebSocket = require('ws');
 const admin = require('firebase-admin');
 
+// Sunucuyu başlat
 const wss = new WebSocket.Server({ port: 8080 });
 
+// Firebase ayarları
 const serviceAccount = require('./firebase-service-account.json');
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
@@ -19,11 +21,12 @@ admin.initializeApp({
 
 wss.on('connection', async (ws, req) => {
     
+    // Token kontrolü
     const params = new URLSearchParams(req.url.replace('/?', ''));
     const idToken = params.get('token');
 
     if (!idToken) {
-        ws.close(1008, 'Token missing');
+        ws.close(1008, 'Token eksik');
         return;
     }
 
@@ -33,25 +36,13 @@ wss.on('connection', async (ws, req) => {
         
         ws.on('message', (message) => {
             const data = JSON.parse(message);
-            broadcastMessage(data, ws.userId);
+            mesajiYayinla(data, ws.userId);
         });
 
     } catch (error) {
-        ws.close(1008, 'Invalid Token');
+        ws.close(1008, 'Geçersiz Token');
     }
 });
-
-function broadcastMessage(data, senderId) {
-    wss.clients.forEach(client => {
-        if (client.readyState === WebSocket.OPEN) {
-            client.send(JSON.stringify({
-                sender: senderId,
-                content: data.content,
-                timestamp: Date.now()
-            }));
-        }
-    });
-}
 </div>
 
 <?php include 'includes/footer.php'; ?>

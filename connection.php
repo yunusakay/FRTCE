@@ -1,13 +1,13 @@
 <?php
-$databaseHost = 'localhost';
-$databaseName = 'FRTCEDB';
-$databaseUser = 'root';
-$databasePassword = '';
+$veritabaniSunucu = 'localhost';
+$veritabaniAdi = 'FRTCEDB';
+$veritabaniKullanici = 'root';
+$veritabaniSifre = '';
 
 try {
-    $databaseConnection = new PDO("mysql:host=$databaseHost;dbname=$databaseName;charset=utf8", $databaseUser, $databasePassword);
-    $databaseConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $exception) {
-    die("Connection failed: " . $exception->getMessage());
+    $baglanti = new PDO("mysql:host=$veritabaniSunucu;dbname=$veritabaniAdi;charset=utf8", $veritabaniKullanici, $veritabaniSifre);
+    $baglanti->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Bağlantı hatası: " . $e->getMessage());
 }
 ?>

@@ -1,37 +1,37 @@
 <?php include 'includes/header.php'; ?>
 
-<h1>Data Workflow</h1>
-<p>The four-stage process that occurs when the user opens the application.</p>
+<h1 class="text-primary border-bottom pb-2">Veri Akış Senaryosu</h1>
+<p>Kullanıcı uygulamayı açtığında gerçekleşen dört aşamalı süreç aşağıdadır.</p>
 
-<h3>Step 1: Auth Handshake</h3>
+<h3 class="mt-4 text-secondary">Adım 1: Kimlik Doğrulama (El Sıkışma)</h3>
 <p>
-    The user logs in. Firebase returns an ID Token.
-    Flutter takes this token and sends a connection request to the WebSocket server.
+    Kullanıcı giriş yapar. Firebase bir ID Token döndürür.
+    Flutter bu token'ı alır ve WebSocket sunucusuna bağlantı isteği gönderir.
 </p>
-<div class="code-display">
+<div class="code-block">
 socket.connect('wss://api.chat.com', headers: {
     'Authorization': 'Bearer ' + firebaseUser.getIdToken()
 });
 </div>
 
-<h3>Step 2: Sync</h3>
+<h3 class="mt-4 text-secondary">Adım 2: Senkronizasyon (Sync)</h3>
 <p>
-    While the socket connects, the application simultaneously fetches the last 50 messages from Firestore using lazy loading.
+    Soket bağlanırken, uygulama aynı anda "Tembel Yükleme" (Lazy Loading) kullanarak Firestore'dan son 50 mesajı çeker.
 </p>
 
-<h3>Step 3: Sending Message</h3>
-<p>
-    When the user presses send:
+<h3 class="mt-4 text-secondary">Adım 3: Mesaj Gönderme</h3>
+<div class="card bg-light border-0 p-3">
+    Kullanıcı gönder butonuna bastığında:
     <ol>
-        <li>The message is delivered instantly via WebSocket.</li>
-        <li>The message is backed up to Firestore asynchronously.</li>
+        <li>Mesaj, <strong>WebSocket</strong> üzerinden anında iletilir.</li>
+        <li>Mesaj, arka planda asenkron olarak <strong>Firestore</strong>'a yedeklenir.</li>
     </ol>
-</p>
+</div>
 
-<h3>Step 4: Notifications</h3>
+<h3 class="mt-4 text-secondary">Adım 4: Bildirimler</h3>
 <p>
-    When the user types, a typing packet is sent to the socket server.
-    This packet is never written to the database, ensuring zero storage cost.
+    Kullanıcı yazı yazarken, soket sunucusuna bir "yazıyor" paketi gönderilir.
+    Bu paket asla veritabanına yazılmaz, böylece sıfır depolama maliyeti sağlanır.
 </p>
 
 <?php include 'includes/footer.php'; ?>

@@ -1,48 +1,52 @@
 <?php include 'includes/header.php'; ?>
 
-<h1>System Architecture and Design</h1>
+<h1 class="text-primary border-bottom pb-2">Sistem Mimarisi ve Tasarım</h1>
 
-<p>The FRTCE Architecture is designed to manage two distinct communication channels simultaneously.</p>
+<p>FRTCE Mimarisi, iki farklı iletişim kanalını aynı anda yönetmek üzere tasarlanmıştır.</p>
 
-<h3>1. Architecture Diagram</h3>
+<h3 class="mt-4">1. Mimari Diyagramı</h3>
 <div class="diagram-box">
-    [ FLUTTER CLIENT ]
+    [ FLUTTER İSTEMCİSİ ]
     <br>⬇️ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ⬇️<br>
     (HTTPS) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (WSS)<br>
     ⬇️ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ⬇️<br>
-    [ FIREBASE ] &nbsp;&nbsp; [ WEBSOCKET SERVER ]
+    [ FIREBASE ] &nbsp;&nbsp; [ WEBSOCKET SUNUCUSU ]
 </div>
 
-<h3>2. Channel Responsibilities</h3>
-<table>
-    <tr>
-        <th>Channel</th>
-        <th>Technology</th>
-        <th>Data Type</th>
-    </tr>
-    <tr>
-        <td><strong>Slow Path (Secure)</strong></td>
-        <td>Firebase Firestore</td>
-        <td>User Profiles, Message History, Media Files</td>
-    </tr>
-    <tr>
-        <td><strong>Fast Path (Live)</strong></td>
-        <td>Node.js / Socket</td>
-        <td>Instant Messages, Typing Indicators, Online Status</td>
-    </tr>
+<h3 class="mt-4">2. Kanal Sorumlulukları</h3>
+<table class="table table-bordered table-striped mt-3">
+    <thead class="table-dark">
+        <tr>
+            <th>Kanal</th>
+            <th>Teknoloji</th>
+            <th>Veri Tipi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Yavaş Yol (Güvenli)</strong></td>
+            <td>Firebase Firestore</td>
+            <td>Kullanıcı Profilleri, Mesaj Geçmişi, Medya Dosyaları</td>
+        </tr>
+        <tr>
+            <td><strong>Hızlı Yol (Canlı)</strong></td>
+            <td>Node.js / Socket</td>
+            <td>Anlık Mesajlar, Yazıyor Göstergesi, Çevrimiçi Durumu</td>
+        </tr>
+    </tbody>
 </table>
 
-<h3>3. Data Protocol</h3>
-<p>The WebSocket data packet structure:</p>
+<h3 class="mt-4">3. Veri Protokolü</h3>
+<p>WebSocket veri paketi yapısı:</p>
 
-<div class="code-display">
+<div class="code-block">
 {
-  "type": "MESSAGE_NEW",
-  "payload": {
-    "senderId": "uid_12345",
-    "authToken": "firebase_jwt_xyz", 
-    "content": "Hello world",
-    "timestamp": 1715420000
+  "tip": "YENI_MESAJ",
+  "veri": {
+    "gonderenId": "uid_12345",
+    "kimlikToken": "firebase_jwt_xyz", 
+    "icerik": "Merhaba dünya",
+    "zamanDamgasi": 1715420000
   }
 }
 </div>

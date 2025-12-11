@@ -1,48 +1,38 @@
 <?php include 'includes/header.php'; ?>
 
-<h1>Client: Flutter Socket Service</h1>
+<h1 class="text-primary border-bottom pb-2">İstemci: Flutter Socket Servisi</h1>
 <p>
-    The client uses a Singleton pattern to manage the persistent connection.
+    İstemci tarafı, kalıcı bağlantıyı yönetmek için Singleton tasarım desenini kullanır.
 </p>
 
-<h3>socket_service.dart</h3>
-<div class="code-display">
+<h3 class="mt-4">socket_service.dart</h3>
+<div class="code-block">
 import 'package:web_socket_channel/io.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class SocketService {
-  static final SocketService _instance = SocketService._internal();
-  factory SocketService() => _instance;
-  SocketService._internal();
+  static final SocketService _ornek = SocketService._dahili();
+  factory SocketService() => _ornek;
+  SocketService._dahili();
 
-  IOWebSocketChannel? _channel;
+  IOWebSocketChannel? _kanal;
 
-  Future<void> connect() async {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user == null) return;
+  Future<void> baglan() async {
+    User? kullanici = FirebaseAuth.instance.currentUser;
+    if (kullanici == null) return;
     
-    String? token = await user.getIdToken();
+    String? token = await kullanici.getIdToken();
 
     final url = 'ws://192.168.1.50:8080?token=$token';
-    _channel = IOWebSocketChannel.connect(Uri.parse(url));
+    _kanal = IOWebSocketChannel.connect(Uri.parse(url));
 
-    _channel!.stream.listen(
-      (message) {
-        // Handle incoming message
+    _kanal!.stream.listen(
+      (mesaj) {
+        // Gelen mesajı işle
       },
-      onError: (error) => print(error),
-      onDone: () => print("Disconnected"),
+      onError: (hata) => print(hata),
+      onDone: () => print("Bağlantı koptu"),
     );
-  }
-
-  void sendMessage(String text) {
-    if (_channel != null) {
-      _channel!.sink.add('{"content": "$text"}');
-    }
-  }
-  
-  void disconnect() {
-    _channel?.sink.close();
   }
 }
 </div>

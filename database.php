@@ -1,36 +1,38 @@
 <?php include 'includes/header.php'; ?>
 
-<h1>NoSQL Veritabanı Tasarımı</h1>
+<h1 class="text-primary border-bottom pb-2">NoSQL Veritabanı Tasarımı</h1>
 <p>
-    Hibrit mimaride Firestore, sadece "Kalıcı Veri" (Persistent Data) için kullanılır. 
-    Aşağıda, maliyeti düşürmek için optimize edilmiş koleksiyon yapısı gösterilmiştir.
+    Firestore, maliyetleri optimize etmek amacıyla sadece kalıcı veriler için kullanılır.
+    Aşağıdaki şema, okuma işlemlerini azaltmak için <strong>Denormalizasyon</strong> tekniğini kullanır.
 </p>
 
-<h3>Koleksiyon Yapısı (JSON Schema)</h3>
+<h3 class="mt-4">Koleksiyon Yapısı</h3>
 <div class="code-block">
-📂 users (Collection)
-  └─ 📄 user_id_123
-       ├─ username: "Yunus"
-       ├─ avatar: "url..."
-       └─ last_seen: TIMESTAMP
+users (Koleksiyon)
+  └─ uid_12345
+       ├─ kullaniciAdi: "Ahmet"
+       ├─ avatarUrl: "https://..."
+       └─ olusturulmaTarihi: ZAMAN_DAMGASI
 
-📂 chats (Collection)
-  └─ 📄 chat_id_abc
-       ├─ participants: ["user_123", "user_456"]
-       └─ last_message: "Projeyi bitirdin mi?" (Önizleme için)
+chats (Koleksiyon)
+  └─ chat_id_789
+       ├─ katilimcilar: ["uid_12345", "uid_67890"]
+       ├─ sonMesaj: "Yarın görüşürüz."
+       ├─ sonMesajZamani: ZAMAN_DAMGASI
+       └─ okunmamisSayisi: 2
 
-📂 messages (Sub-Collection)
-  └─ 📄 message_id_xyz
-       ├─ sender_id: "user_123"
-       ├─ content: "Projeyi bitirdin mi?"
-       ├─ type: "text" (veya image)
-       └─ created_at: TIMESTAMP
+messages (Alt Koleksiyon)
+  └─ msg_id_001
+       ├─ gonderenId: "uid_12345"
+       ├─ icerik: "Yarın görüşürüz."
+       ├─ tip: "metin"
+       └─ zamanDamgasi: ZAMAN_DAMGASI
 </div>
 
-<h3>Optimizasyon Notları</h3>
-<ul class="feature-list">
-    <li><strong>Denormalizasyon:</strong> Sohbet listesinde her seferinde mesajları çekmemek için <code>last_message</code> alanı üst dökümanda tutulur.</li>
-    <li><strong>Yazma Tasarrufu:</strong> "Yazıyor..." veya "Çevrimiçi" durumları buraya ASLA yazılmaz (Socket ile taşınır).</li>
+<h3 class="mt-4">Tasarım Kararları</h3>
+<ul class="list-group">
+    <li class="list-group-item"><strong>Veri Tekrarı:</strong> Son mesaj, sohbet listesinde alt koleksiyonu sorgulamamak için üst sohbet dökümanına kopyalanır.</li>
+    <li class="list-group-item"><strong>Yazma Optimizasyonu:</strong> "Yazıyor" veya "Çevrimiçi" gibi durum güncellemeleri asla Firestore'a yazılmaz.</li>
 </ul>
 
 <?php include 'includes/footer.php'; ?>
