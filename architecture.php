@@ -1,53 +1,50 @@
 <?php include 'includes/header.php'; ?>
 
-<h1>Sistem Mimarisi ve Tasarım</h1>
+<h1>System Architecture and Design</h1>
 
-<p>Bu projede tasarlanan <strong>FRTCE Mimarisi</strong>, Flutter istemcisinin iki farklı kanalı aynı anda yönetmesi prensibine dayanır.</p>
+<p>The FRTCE Architecture is designed to manage two distinct communication channels simultaneously.</p>
 
-<h3>1. Mimari Diyagramı</h3>
+<h3>1. Architecture Diagram</h3>
 <div class="diagram-box">
-    [ FLUTTER UYGULAMASI ]
+    [ FLUTTER CLIENT ]
     <br>⬇️ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ⬇️<br>
     (HTTPS) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (WSS)<br>
     ⬇️ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ⬇️<br>
-    [ FIREBASE ] &nbsp;&nbsp; [ WEBSOCKET SUNUCU ]
+    [ FIREBASE ] &nbsp;&nbsp; [ WEBSOCKET SERVER ]
 </div>
 
-<h3>2. Kanal Görevleri</h3>
-<p>Sistemdeki veri trafiği iki ana yola ayrılmıştır:</p>
-
-<table border="1" cellpadding="10" style="width:100%; border-collapse:collapse; border-color:#eee;">
-    <tr style="background:#f1f8e9;">
-        <th>Kanal</th>
-        <th>Teknoloji</th>
-        <th>Taşıdığı Veri</th>
+<h3>2. Channel Responsibilities</h3>
+<table>
+    <tr>
+        <th>Channel</th>
+        <th>Technology</th>
+        <th>Data Type</th>
     </tr>
     <tr>
-        <td><strong>Yavaş Yol (Güvenli)</strong></td>
+        <td><strong>Slow Path (Secure)</strong></td>
         <td>Firebase Firestore</td>
-        <td>Kullanıcı Profilleri, Geçmiş Mesajlar, Medya Dosyaları</td>
+        <td>User Profiles, Message History, Media Files</td>
     </tr>
     <tr>
-        <td><strong>Hızlı Yol (Canlı)</strong></td>
-        <td>Node.js / PHP Socket</td>
-        <td>Anlık Chat Mesajı, "Yazıyor" bilgisi, "Görüldü" bilgisi</td>
+        <td><strong>Fast Path (Live)</strong></td>
+        <td>Node.js / Socket</td>
+        <td>Instant Messages, Typing Indicators, Online Status</td>
     </tr>
 </table>
 
-<h3>3. Veri Protokolü (JSON)</h3>
-<p>WebSocket üzerinden akan veri paketi şu formattadır:</p>
+<h3>3. Data Protocol</h3>
+<p>The WebSocket data packet structure:</p>
 
-<div class="code-block">
+<div class="code-display">
 {
   "type": "MESSAGE_NEW",
   "payload": {
-    "sender_id": "uid_12345",
-    "auth_token": "firebase_jwt_xyz...", 
-    "content": "Merhaba, proje hazır mı?",
+    "senderId": "uid_12345",
+    "authToken": "firebase_jwt_xyz", 
+    "content": "Hello world",
     "timestamp": 1715420000
   }
 }
 </div>
-<small>*Token her mesajda doğrulanarak güvenlik sağlanır.</small>
 
 <?php include 'includes/footer.php'; ?>

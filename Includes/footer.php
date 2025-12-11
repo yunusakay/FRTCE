@@ -1,6 +1,6 @@
 </main>
     <footer>
-        <p>&copy; <?php echo date("Y"); ?> FRTCE Projesi. Flutter, Firebase ve WebSocket Araştırması.</p>
+        <p>&copy; <?php echo date("Y"); ?> FRTCE Project. Hybrid Architecture Research.</p>
     </footer>
 </body>
 </html>

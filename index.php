@@ -1,25 +1,25 @@
 <?php include 'includes/header.php'; ?>
 
-<h1>Araştırma Hipotezi: Hibrit Model</h1>
+<h1>Research Hypothesis: Hybrid Model</h1>
 <p>
-    Modern sohbet uygulamalarında tek bir teknolojiye (Sadece Firebase veya Sadece WebSocket) güvenmek yetersiz kalmaktadır. 
-    Örneğin; "Yazıyor..." (Typing Indicator) özelliğini sadece <strong>Firebase Firestore</strong> üzerinde çalıştırmak, 
-    veritabanına saniyede onlarca kez yazma işlemi yapacağından aşırı maliyet ve yavaşlığa neden olur.
+    Research indicates that a single technology is insufficient for a modern chat application.
+    Running typing indicators solely on Firebase results in excessive database writes and costs.
+    Conversely, building a secure authentication system solely on WebSockets is complex and risky.
 </p>
 <p>
-    Öte yandan, sadece <strong>WebSocket</strong> kullanmak da; kullanıcı doğrulama (Auth) ve mesaj geçmişini güvenle saklama 
-    konularında güvenlik riskleri ve geliştirme zorlukları doğurur.
+    The optimal solution is an integrated architecture where Firebase handles 
+    state and security, while WebSockets handle real-time events.
 </p>
 
 <div class="diagram-box">
-    SONUÇ: En optimum çözüm Hibrit Mimari'dir.
+    CONCLUSION: The Hybrid Architecture is the optimal solution.
 </div>
 
-<h3>Neden Birlikte Kullanmalıyız?</h3>
+<h3>Why Use Both?</h3>
 <ul class="feature-list">
-    <li><strong>Güvenlik İçin:</strong> Firebase Authentication (JWT Token yönetimi bizden çıkar).</li>
-    <li><strong>Hız İçin:</strong> WebSocket (Mesajlar veritabanına uğramadan RAM üzerinden akar).</li>
-    <li><strong>Maliyet İçin:</strong> Anlık durumlar (Online/Offline) Socket üzerinden bedavaya yönetilir.</li>
+    <li><strong>Security:</strong> Firebase Authentication handles JWT Token management.</li>
+    <li><strong>Speed:</strong> WebSockets allow messages to flow through RAM without hitting the database.</li>
+    <li><strong>Cost:</strong> Real-time status updates are managed via Sockets at zero database cost.</li>
 </ul>
 
 <?php include 'includes/footer.php'; ?>

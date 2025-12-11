@@ -1,39 +1,37 @@
 <?php include 'includes/header.php'; ?>
 
-<h1>Veri Akış Senaryosu (Workflow)</h1>
-<p>Kullanıcı uygulamayı açtığında arka planda gerçekleşen 4 aşamalı süreç aşağıdadır.</p>
+<h1>Data Workflow</h1>
+<p>The four-stage process that occurs when the user opens the application.</p>
 
-<h3>Adım 1: Kimlik Doğrulama (Auth Handshake)</h3>
+<h3>Step 1: Auth Handshake</h3>
 <p>
-    Kullanıcı şifresiyle giriş yapar. Firebase bir <strong>ID Token</strong> döner. 
-    Flutter, bu token'ı alıp WebSocket sunucusuna bağlantı isteği (Handshake) gönderir.
+    The user logs in. Firebase returns an ID Token.
+    Flutter takes this token and sends a connection request to the WebSocket server.
 </p>
-<div class="code-block">
-// Flutter Kodu (Örnek)
+<div class="code-display">
 socket.connect('wss://api.chat.com', headers: {
     'Authorization': 'Bearer ' + firebaseUser.getIdToken()
 });
 </div>
 
-<h3>Adım 2: Geçmişi Yükle (Sync)</h3>
+<h3>Step 2: Sync</h3>
 <p>
-    Socket bağlanırken, uygulama aynı anda Firestore'dan son 50 mesajı çeker (Lazy Loading). 
-    Böylece kullanıcı bekletilmez.
+    While the socket connects, the application simultaneously fetches the last 50 messages from Firestore using lazy loading.
 </p>
 
-<h3>Adım 3: Mesaj Gönderme</h3>
+<h3>Step 3: Sending Message</h3>
 <p>
-    Kullanıcı "Gönder" butonuna bastığında:
+    When the user presses send:
     <ol>
-        <li>Mesaj <strong>WebSocket</strong> ile anında karşı tarafa iletilir (Milisaniyeler içinde).</li>
-        <li>Mesaj arka planda (Asenkron) <strong>Firestore</strong> veritabanına yedeklenir.</li>
+        <li>The message is delivered instantly via WebSocket.</li>
+        <li>The message is backed up to Firestore asynchronously.</li>
     </ol>
 </p>
 
-<h3>Adım 4: Anlık Bildirimler</h3>
+<h3>Step 4: Notifications</h3>
 <p>
-    Kullanıcı yazı yazarken, Socket sunucusuna <code>{"type": "TYPING"}</code> paketi atılır. 
-    Bu paket veritabanına kaydedilmez, sadece karşı tarafa iletilir. Bu sayede veritabanı maliyeti <strong>Sıfır</strong> olur.
+    When the user types, a typing packet is sent to the socket server.
+    This packet is never written to the database, ensuring zero storage cost.
 </p>
 
 <?php include 'includes/footer.php'; ?>
