@@ -5,6 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 $mevcutSayfa = basename($_SERVER['PHP_SELF']);
 
+// Giriş kontrolü
 if (!isset($_SESSION['aktifKullaniciId']) && $mevcutSayfa != 'login.php') {
     header("Location: login.php");
     exit;
@@ -33,20 +34,20 @@ if (!isset($_SESSION['aktifKullaniciId']) && $mevcutSayfa != 'login.php') {
             font-weight: bold; 
         }
 
-        /* GÜNCELLENMİŞ KOD BLOĞU STİLİ (VS Code Teması) */
+        /* YENİ: Göz Yormayan Kod Bloğu (VS Code Dark Tema) */
         pre.code-block {
-            background-color: #1e1e1e; /* Mat Koyu Gri (VS Code Arkaplanı) */
-            color: #d4d4d4;            /* Yumuşak Gri/Beyaz Yazı */
+            background-color: #1e1e1e; /* Koyu Gri */
+            color: #d4d4d4;            /* Yumuşak Beyaz */
             padding: 20px;
             border-radius: 8px;
-            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-family: 'Consolas', 'Monaco', monospace;
             font-size: 14px;
-            line-height: 1.5;          /* Satır aralığını açarak okunabilirliği artırdık */
+            line-height: 1.6;          /* Satır aralığı */
             overflow-x: auto;
-            white-space: pre;          /* Satır başlarını korur */
+            white-space: pre;          /* Kodları alt alta dizer */
             margin: 20px 0;
-            border: 1px solid #333;    /* Çok hafif kenarlık */
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3); /* Hafif gölge */
+            border: 1px solid #333;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         }
 
         .main-content { min-height: 80vh; padding-bottom: 50px; }

@@ -1,6 +1,7 @@
-</div> <footer class="bg-dark text-white text-center py-3 mt-4">
+</div> <footer class="bg-dark text-white text-center py-4 mt-5">
         <div class="container">
-            <p class="mb-0">&copy;2025 FRTCE Araştırması Yunus AKAY.</p>
+            <p class="mb-0 fw-bold">&copy; <?php echo date("Y"); ?> FRTCE Projesi.</p>
+            <small class="text-muted">Flutter + Firebase + WebSocket Hibrit Mimarisi</small>
         </div>
     </footer>
 
