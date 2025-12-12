@@ -2,7 +2,7 @@
 
 <h1 class="text-primary border-bottom pb-2">Performans ve Maliyet Analizi</h1>
 <p>
-    10.000 anlık kullanıcı senaryosunda "Sadece Firebase" yaklaşımı ile "Hibrit FRTCE Modeli" karşılaştırması.
+    10.000 anlık kullanıcı senaryosunda "Sadece Firebase" yaklaşımı ile <strong>"Hibrit FRTC Modeli"</strong> karşılaştırması.
 </p>
 
 <h3 class="mt-4">1. Aylık Maliyet Projeksiyonu</h3>
@@ -11,7 +11,7 @@
         <tr>
             <th>Metrik</th>
             <th>Geleneksel Firebase</th>
-            <th>Hibrit FRTCE</th>
+            <th>Hibrit FRTC</th>
         </tr>
     </thead>
     <tbody>

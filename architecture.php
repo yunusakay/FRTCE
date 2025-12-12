@@ -2,7 +2,7 @@
 
 <h1 class="text-primary border-bottom pb-2">Sistem Mimarisi ve Tasarım</h1>
 
-<p>FRTCE Mimarisi, iki farklı iletişim kanalını aynı anda yönetmek üzere tasarlanmıştır.</p>
+<p><strong>FRTC (Flutter Real-Time Chat)</strong> Mimarisi, iki farklı iletişim kanalını aynı anda yönetmek üzere tasarlanmıştır.</p>
 
 <h3 class="mt-4">1. Mimari Diyagramı</h3>
 <div class="diagram-box">

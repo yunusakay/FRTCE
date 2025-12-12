@@ -56,7 +56,7 @@ if (!isset($_SESSION['aktifKullaniciId']) && $mevcutSayfa != 'login.php') {
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
         <div class="container">
-            <a class="navbar-brand" href="index.php"><i class="fa-solid fa-comments"></i> FRTCE Projesi</a>
+            <a class="navbar-brand" href="index.php"><i class="fa-solid fa-comments"></i> Flutter Gerçek Zamanlı Sohbet Açıklaması</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>

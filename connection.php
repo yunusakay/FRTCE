@@ -1,6 +1,4 @@
 <?php
-// BURADA session_start(); OLMAMALI!
-
 $veritabaniSunucu = 'localhost';
 $veritabaniAdi = 'FRTCEDB';
 $veritabaniKullanici = 'root';
