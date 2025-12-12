@@ -1,38 +1,44 @@
 <?php include 'includes/header.php'; ?>
 
 <h1 class="text-primary border-bottom pb-2">NoSQL Veritabanı Tasarımı</h1>
-<p>
-    Firestore, maliyetleri optimize etmek amacıyla sadece kalıcı veriler için kullanılır.
-    Aşağıdaki şema, okuma işlemlerini azaltmak için <strong>Denormalizasyon</strong> tekniğini kullanır.
+<p class="lead">
+    Firestore maliyetlerini optimize etmek için <strong>Denormalizasyon</strong> tekniği kullanılmıştır.
+    Aşağıdaki şema, okuma sayılarını en aza indirmek için tasarlanmıştır.
 </p>
 
-<h3 class="mt-4">Koleksiyon Yapısı</h3>
-<div class="code-block">
-users (Koleksiyon)
-  └─ uid_12345
+<h3 class="mt-4">Koleksiyon Yapısı (JSON)</h3>
+<pre class="code-block">
+📂 users (Koleksiyon)
+  └─ 📄 uid_12345
        ├─ kullaniciAdi: "Ahmet"
-       ├─ avatarUrl: "https://..."
-       └─ olusturulmaTarihi: ZAMAN_DAMGASI
+       ├─ avatarUrl: "https://ornek.com/foto.jpg"
+       └─ olusturulmaTarihi: TIMESTAMP
 
-chats (Koleksiyon)
-  └─ chat_id_789
+📂 chats (Koleksiyon)
+  └─ 📄 chat_id_abc
        ├─ katilimcilar: ["uid_12345", "uid_67890"]
-       ├─ sonMesaj: "Yarın görüşürüz."
-       ├─ sonMesajZamani: ZAMAN_DAMGASI
+       ├─ sonMesaj: "Projeyi tamamladın mı?"  // <-- Liste ekranı için kopya
+       ├─ sonMesajZamani: TIMESTAMP
        └─ okunmamisSayisi: 2
 
-messages (Alt Koleksiyon)
-  └─ msg_id_001
+📂 messages (Alt Koleksiyon)
+  └─ 📄 msg_id_xyz
        ├─ gonderenId: "uid_12345"
-       ├─ icerik: "Yarın görüşürüz."
-       ├─ tip: "metin"
-       └─ zamanDamgasi: ZAMAN_DAMGASI
-</div>
+       ├─ icerik: "Projeyi tamamladın mı?"
+       ├─ tip: "text" (veya "image")
+       └─ zamanDamgasi: TIMESTAMP
+</pre>
 
-<h3 class="mt-4">Tasarım Kararları</h3>
+<h3 class="mt-4">Optimizasyon Notları</h3>
 <ul class="list-group">
-    <li class="list-group-item"><strong>Veri Tekrarı:</strong> Son mesaj, sohbet listesinde alt koleksiyonu sorgulamamak için üst sohbet dökümanına kopyalanır.</li>
-    <li class="list-group-item"><strong>Yazma Optimizasyonu:</strong> "Yazıyor" veya "Çevrimiçi" gibi durum güncellemeleri asla Firestore'a yazılmaz.</li>
+    <li class="list-group-item">
+        <i class="fa-solid fa-check text-success"></i> 
+        <strong>Veri Tekrarı:</strong> Sohbet listesinde her seferinde alt koleksiyona sorgu atmamak için son mesaj bilgisi üst dökümanda tutulur.
+    </li>
+    <li class="list-group-item">
+        <i class="fa-solid fa-check text-success"></i> 
+        <strong>Yazma Tasarrufu:</strong> "Yazıyor..." veya "Çevrimiçi" durumları buraya ASLA yazılmaz, sadece WebSocket üzerinden iletilir.
+    </li>
 </ul>
 
 <?php include 'includes/footer.php'; ?>
