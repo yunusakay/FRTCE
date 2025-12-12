@@ -58,6 +58,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <button type="submit" class="btn btn-primary btn-lg mt-2 fw-bold">Giriş Yap</button>
             </form>
+
+            <div class="text-center mt-3">
+                <a href="register.php" class="text-decoration-none text-secondary">Hesabın yok mu? <strong>Kayıt Ol</strong></a>
+            </div>
         </div>
         <div class="card-footer text-center text-muted border-0 bg-white">
             <small>Araştırma Projesi Giriş Ekranı</small>
